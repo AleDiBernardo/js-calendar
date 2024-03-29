@@ -10,25 +10,37 @@ const weekDays = [
 ];
 
 const holidays = [4, 5, 29];
+const rowElem = document.querySelector(".row");
 
 //la settimana inizia da venerdì 1 con indice 4
 
 for (let i = 1; i <= 31; i++) {
+  const squareElem = document.createElement("div");
+  squareElem.classList.add("square");
+  squareElem.classList.add("flex");
+  squareElem.classList.add("just-cont-ctr");
+  squareElem.classList.add("align-ctr");
 
   //quando da resto 0 resetta i giorni della settimana
-  let weekDaysReset = weekDays[(i + 3) % 7];
-  let dayNum;
+  let weekDaysReset = weekDays[(i + 3) % weekDays.length];
 
-  //se il giorno corrente è festivo stampa HOLIDAY
+  let dayNum = `${i} ${weekDaysReset}`;
+
+  //se il giorno corrente è festivo stampa HOLIDAY altrimenti se è sabato o domenica WEEKEND
   if (i === holidays[0] || i === holidays[1] || i === holidays[2]) {
-    dayNum = `HOLIDAY: ${i} ${weekDaysReset}`;
-
+    squareElem.classList.add("holiday-bg");
+    
+    dayNum = `HOLIDAY: ${dayNum}`;
   } else if (weekDaysReset === weekDays[5] || weekDaysReset === weekDays[6]) {
-    dayNum = `WEEKEND: ${i} ${weekDaysReset}`;
+    squareElem.classList.add("weekend-bg");
 
-  } else {
-    dayNum = `${i} ${weekDaysReset}`;
+    dayNum = `WEEKEND: ${dayNum}`;
   }
+  squareElem.innerHTML = ` 
+        <span>${weekDaysReset}</span>
+        <span>${i}</span>
+    `;
 
   console.log(dayNum);
+  rowElem.append(squareElem);
 }
